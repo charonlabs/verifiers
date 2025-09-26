@@ -79,7 +79,7 @@ class MultiTurnEnv(Environment):
             completion = ""
             state["responses_start_idx"] = []
         rollout = list(prompt) if not isinstance(prompt, str) else prompt
-        sampling_args["idx"] = idx
+        sampling_args["id"] = idx
         while not is_completed:
             if await maybe_await(self.is_completed, rollout, state, **kwargs):
                 is_completed = True
