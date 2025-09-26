@@ -280,6 +280,7 @@ class Environment(ABC):
     @abstractmethod
     async def rollout(
         self,
+        idx: int,
         client: AsyncOpenAI,
         model: str,
         prompt: Messages,
@@ -351,9 +352,9 @@ class Environment(ABC):
         else:
             rollout_tasks = [
                 self.rollout(
-                    client, model, prompt, answer, task, info, sampling_args, **kwargs
+                    idx, client, model, prompt, answer, task, info, sampling_args, **kwargs
                 )
-                for prompt, answer, task, info in zip(prompts, answers, tasks, infos)
+                for idx, (prompt, answer, task, info) in enumerate(zip(prompts, answers, tasks, infos))
             ]
         return await tqdm_asyncio.gather(
             *rollout_tasks, total=len(prompts), desc=f"Running {len(prompts)} rollouts"
