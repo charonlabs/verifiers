@@ -39,7 +39,6 @@ class MultiTurnEnv(Environment):
 
     async def rollout(
         self,
-        idx: int,
         client: AsyncOpenAI,
         model: str,
         prompt: Messages,
@@ -55,7 +54,7 @@ class MultiTurnEnv(Environment):
         info = info or {}
         is_completed = False
         state = {
-            "id": idx,
+            "id": sampling_args.get("id", 0),
             "prompt": prompt,
             "completion": [],
             "answer": answer,
@@ -79,7 +78,6 @@ class MultiTurnEnv(Environment):
             completion = ""
             state["responses_start_idx"] = []
         rollout = list(prompt) if not isinstance(prompt, str) else prompt
-        sampling_args["id"] = idx
         while not is_completed:
             if await maybe_await(self.is_completed, rollout, state, **kwargs):
                 is_completed = True
