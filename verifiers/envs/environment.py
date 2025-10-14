@@ -365,7 +365,7 @@ class Environment(ABC):
         else:
             rollout_tasks = [
                 self.rollout(
-                    client, model, prompt, answer, task, info, (sampling_args + {"id": idx}), **kwargs
+                    client, model, prompt, answer, task, info, (sampling_args | {"id": idx}), **kwargs
                 )
                 for idx, (prompt, answer, task, info) in enumerate(zip(prompts, answers, tasks, infos))
             ]
