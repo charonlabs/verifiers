@@ -2,9 +2,13 @@
 
 This guide covers best practices for contributing to the core `verifiers` library and for and developing new environments (e.g. in `environments/`).
 
+Other relevant `AGENTS.md` files:
+- `tests/AGENTS.md`
+- `verifiers/envs/AGENTS.md`
+
 ## Setup
 
-We strongly recommend using `uv` for developing `verifiers`.
+We use `uv` for developing `verifiers`.
 ```bash
 # Install uv (first time)
 curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -36,7 +40,7 @@ git clone https://github.com/PrimeIntellect-ai/verifiers.git
 cd verifiers
 
 # CPU-only development:
-uv sync --extra dev
+uv sync
 
 # GPU-based trainer development:
 uv sync --all-extras && uv pip install flash-attn --no-build-isolation
