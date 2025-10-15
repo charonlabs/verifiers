@@ -646,6 +646,7 @@ class Environment(ABC):
         max_concurrent_generation: int | None = None,
         max_concurrent_scoring: int | None = None,
         interleave_scoring: bool = True,
+        seed: int | None = None,
         **kwargs,
     ) -> GenerateOutputs:
         """
@@ -654,9 +655,9 @@ class Environment(ABC):
         if self.eval_dataset is None:
             self.logger.info("eval_dataset is not set, falling back to train dataset")
             assert self.dataset is not None
-            inputs = self.get_dataset(n=num_examples)
+            inputs = self.get_dataset(n=num_examples, seed=seed)
         else:
-            inputs = self.get_eval_dataset(n=num_examples)
+            inputs = self.get_eval_dataset(n=num_examples, seed=seed)
         assert inputs is not None, "No dataset found"
         if rollouts_per_example > 1:
             inputs = inputs.repeat(rollouts_per_example)
